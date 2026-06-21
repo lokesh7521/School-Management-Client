@@ -7,8 +7,7 @@ import {
   FaPalette,
   FaRunning,
   FaHome,
-  FaBus,
-  FaCamera
+  FaBus
 } from "react-icons/fa";
 
 const whyChooseData = [
