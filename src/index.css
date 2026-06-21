@@ -1,13 +1,163 @@
+:root {
+  --primary-color: #0b1329;
+  /* Deep professional slate-navy */
+  --secondary-color: #f97316;
+  /* Vibrant polished orange */
+  --accent-color: #3b82f6;
+  /* Bright educational blue */
+  --accent-hover: #2563eb;
+  --bg-light: #f8fafc;
+  /* Clean light grey */
+  --bg-white: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --font-family: 'Plus Jakarta Sans', sans-serif;
+
+  --border-radius-lg: 16px;
+  --border-radius-md: 12px;
+  --border-radius-sm: 8px;
+
+  --box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --box-shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 4px 6px -1px rgba(15, 23, 42, 0.04);
+  --box-shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Scroll Offset for Sticky Navbar targeting anchor links */
+section[id] {
+  scroll-margin-top: 145px;
+}
+
+@media (max-width: 850px) {
+  section[id] {
+    scroll-margin-top: 90px;
+  }
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-family);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* GLOBAL FULLSCREEN LIGHTBOX VIEWER */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  cursor: zoom-out;
+  animation: lightboxFadeIn 0.25s ease;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: lightboxZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -45px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #f8fafc;
+  font-size: 36px;
+  cursor: pointer;
+  line-height: 1;
+  transition: 0.2s;
+}
+
+.lightbox-close:hover {
+  color: #ffcc00;
+  transform: scale(1.15);
+}
+
+.zoomable-img {
+  cursor: zoom-in;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightboxZoom {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ==========================================
+   GLOBAL SCROLL SHOW/HIDE STICKY HEADER SYSTEM
+   ========================================== */
+
+/* When body has .scroll-down (user is scrolling down), slide the header out */
+body.scroll-down .school-header {
+  transform: translateY(-100%) !important;
+}
+
+/* When body has .scroll-up (user is scrolling up), slide the header back in */
+body.scroll-up .school-header {
+  transform: translateY(0) !important;
+}
+
+/* Override slide-out transition when programmatic scroll or mobile menu is active */
+body.nav-scrolling .school-header,
+body.mobile-menu-open .school-header {
+  transform: translateY(0) !important;
 }

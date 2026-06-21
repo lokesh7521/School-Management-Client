@@ -1,0 +1,485 @@
+.ap-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+/* PAGE HEADING BANNER */
+.ap-page-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, #003366 0%, #0f2460 100%);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 18px rgba(0, 51, 102, 0.18);
+  justify-content: space-between;
+}
+
+.ap-heading-icon {
+  font-size: 40px;
+  color: #ffcc00;
+  flex-shrink: 0;
+}
+
+.ap-heading-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.ap-heading-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+.ap-heading-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ap-heading-back-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateX(-3px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* TOPBAR */
+.ap-topbar {
+  background: linear-gradient(135deg, #002244 0%, #003366 100%);
+  color: white;
+  padding: 24px 8%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.ap-topbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ap-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ap-back-btn:hover {
+  background: white;
+  color: #003366;
+  transform: translateX(-4px);
+}
+
+.ap-topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: right;
+}
+
+.ap-topbar-icon {
+  font-size: 36px;
+  color: #ffcc00;
+}
+
+.ap-topbar-title h1 {
+  font-size: 24px;
+  font-weight: 750;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.ap-topbar-title p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 2px 0 0 0;
+}
+
+/* CONTENT LAYOUT */
+.ap-content {
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.ap-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* SIDEBAR */
+.ap-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.ap-sidebar h3 {
+  font-size: 16px;
+  color: #003366;
+  margin: 0 0 16px 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.ap-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ap-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  color: #475569;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 550;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ap-nav-item:hover {
+  background: #f1f5f9;
+  color: #003366;
+}
+
+.ap-nav-item.active {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 600;
+  border-left: 4px solid #0284c7;
+}
+
+.ap-nav-item svg {
+  font-size: 16px;
+}
+
+/* DETAILS PANEL */
+.ap-details-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HERO BANNER */
+.ap-hero-banner {
+  position: relative;
+  height: 220px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.ap-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ap-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0, 34, 68, 0.85) 30%, rgba(0, 51, 102, 0.4) 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  color: white;
+}
+
+.ap-hero-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.ap-hero-header > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.ap-hero-header .ap-icon {
+  font-size: 50px;
+  color: #ffcc00;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.ap-hero-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ap-hero-header p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 6px 0 0 0;
+}
+
+/* SECTIONS */
+.ap-section {
+  padding: 28px;
+}
+
+.card-style {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.ap-section h3 {
+  font-size: 18px;
+  color: #003366;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.ap-overview-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #334155;
+  margin: 0;
+}
+
+/* GRIDS */
+.ap-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* SUBJECTS ROW */
+.ap-subjects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ap-subject-row {
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.ap-subject-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ap-subject-row strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.ap-subject-row p {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* HIGHLIGHTS */
+.highlight-section {
+  background: #f0fdf4;
+  border-color: #dcfce7;
+}
+
+.ap-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ap-highlights-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  color: #166534;
+  line-height: 1.5;
+}
+
+.check-icon {
+  color: #16a34a;
+  font-size: 16px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE STYLES
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .ap-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ap-sidebar {
+    position: sticky;
+    top: 10px;
+    z-index: 10;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .ap-details-panel {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .ap-nav-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    width: 100%;
+  }
+  .ap-nav-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+
+  .ap-nav-item {
+    white-space: nowrap;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .ap-page-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px 20px;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .ap-heading-back-btn {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .ap-content {
+    padding: 16px 12px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ap-sidebar {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 16px;
+    position: static;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .ap-sidebar h3 {
+    display: none;
+  }
+
+  .ap-nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+    overflow-x: visible;
+  }
+
+  .ap-nav-item {
+    font-size: 13px;
+    padding: 8px 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  }
+
+  .ap-nav-item.active {
+    border: 1px solid #0284c7;
+    border-left-width: 1px;
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+
+  .ap-section {
+    padding: 16px;
+  }
+
+  .ap-grid-two {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ap-hero-overlay {
+    padding: 0 16px;
+  }
+
+  .ap-hero-header {
+    gap: 16px;
+    width: 100%;
+  }
+
+  .ap-hero-header .ap-icon {
+    font-size: 36px;
+  }
+
+  .ap-hero-header h2 {
+    font-size: 18px;
+  }
+
+  .ap-hero-header p {
+    font-size: 12px;
+  }
+}

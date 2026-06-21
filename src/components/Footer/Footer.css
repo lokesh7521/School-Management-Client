@@ -1,0 +1,282 @@
+.footer {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #060a16 100%);
+  border-top: 3px solid var(--secondary-color);
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.25);
+  color: var(--bg-white);
+  padding-top: 60px;
+}
+
+.footer-container {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+/* BOX */
+.footer-box h2,
+.footer-box h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-box h2::after,
+.footer-box h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--secondary-color);
+}
+
+.footer-box:nth-child(1) h2::after {
+  /* No underline under the main name if not needed, or keep it */
+}
+
+/* Contact Us box — stack links vertically */
+.footer-box:nth-child(3) {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-box p {
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+/* LINKS */
+.footer-box ul {
+  list-style: none;
+}
+
+.footer-box ul li {
+  margin-bottom: 10px;
+}
+
+.footer-box ul li a,
+.footer-box a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13.5px;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+/* Quick Links list items keep inline-ish look */
+.footer-box ul li a {
+  display: inline-flex;
+  width: auto;
+}
+
+.footer-box ul li a:hover,
+.footer-box a:hover {
+  color: var(--secondary-color);
+  transform: translateX(4px);
+}
+
+/* ICON */
+.footer-icon {
+  font-size: 16px;
+  color: var(--secondary-color);
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.social-icons a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: var(--bg-white);
+  transition: var(--transition-smooth);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.social-icons a:hover {
+  background-color: var(--secondary-color);
+  color: var(--bg-white);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.45);
+}
+
+/* BOTTOM */
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+}
+
+.footer-bottom p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 768px) {
+  .footer {
+    text-align: left;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1.4fr;
+    gap: 24px;
+    padding: 40px 6%;
+  }
+
+  .footer-box {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* School description column spans both columns and is centered */
+  .footer-box:nth-child(1) {
+    grid-column: span 2;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .footer-box:nth-child(1) h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .footer-box:nth-child(1) h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footer-box:nth-child(1) p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* Quick links and Contact columns */
+  .footer-box h3 {
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .footer-box p {
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .footer-box a {
+    font-size: 13px;
+    line-height: 1.6;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Contact section links layout to keep icons and wrapped text side-by-side */
+  .footer-box:nth-child(3) a {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: start;
+    gap: 10px;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: left;
+    min-width: 0;
+  }
+
+  .footer-box:nth-child(3) a span {
+    min-width: 0;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-box:nth-child(3) a .footer-icon {
+    margin-top: 3px;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 14px;
+    gap: 14px;
+  }
+
+  .social-icons a {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .whatsapp-link {
+    font-size: 13px;
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 20px 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 32px 5%;
+  }
+  
+  /* School name spans full width */
+  .footer-box:nth-child(1) {
+    grid-column: span 2;
+  }
+
+  /* Tighter font for contact links so email/phone fit without cutting */
+  .footer-box:nth-child(3) a {
+    font-size: 11.5px;
+    gap: 6px;
+  }
+
+  .footer-box:nth-child(3) a span {
+    word-break: normal;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+}

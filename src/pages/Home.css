@@ -1,0 +1,44 @@
+/* ========================= */
+/* BACK TO TOP BUTTON */
+/* ========================= */
+
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+
+  width: 44px;
+  height: 44px;
+
+  background: linear-gradient(135deg, #003366, #0055aa);
+  color: white;
+
+  border: none;
+  border-radius: 50%;
+
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 4px 16px rgba(0, 51, 102, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+  animation: fadeInUp 0.3s ease;
+}
+
+.back-to-top:hover {
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  color: #002244;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 153, 0, 0.4);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

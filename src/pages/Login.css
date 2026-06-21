@@ -1,0 +1,173 @@
+/* ========================================= */
+/* PREMIUM LOGIN PORTAL CLASSIC STYLING */
+/* ========================================= */
+
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 50%, #031c36 0%, #010c18 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Floating animated background blobs */
+.login-page::before,
+.login-page::after {
+  content: '';
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.login-page::before {
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, #0052a3 0%, rgba(0, 82, 163, 0) 70%);
+  animation: floatBlob1 18s infinite alternate ease-in-out;
+}
+
+.login-page::after {
+  bottom: -10%;
+  right: -5%;
+  background: radial-gradient(circle, #ffcc00 0%, rgba(255, 204, 0, 0) 70%);
+  animation: floatBlob2 22s infinite alternate ease-in-out;
+}
+
+@keyframes floatBlob1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 40px) scale(1.15); }
+}
+
+@keyframes floatBlob2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-60px, -30px) scale(0.9); }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+  color: white;
+  z-index: 1;
+  position: relative;
+}
+
+.login-container h1 {
+  font-size: 52px;
+  font-weight: 850;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #ffffff 30%, #ffcc00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+}
+
+.login-container p {
+  font-size: 18px;
+  margin-bottom: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* PORTAL CARDS - PREMIUM GLASSMORPHISM */
+.login-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 48px 30px;
+  border-radius: 24px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.login-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 204, 0, 0.3);
+  box-shadow: 0 18px 38px rgba(255, 204, 0, 0.1), 0 8px 18px rgba(0, 0, 0, 0.15);
+  color: #ffcc00;
+}
+
+.login-icon {
+  font-size: 64px;
+  color: #ffcc00;
+  margin-bottom: 22px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.login-card:hover .login-icon {
+  transform: scale(1.12) rotate(4deg);
+  filter: drop-shadow(0 0 12px rgba(255, 204, 0, 0.45));
+}
+
+.login-card h2 {
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 992px) {
+  .login-cards {
+    gap: 16px;
+  }
+  .login-card {
+    padding: 36px 20px;
+  }
+  .login-card h2 {
+    font-size: 20px;
+  }
+  .login-icon {
+    font-size: 54px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-cards {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .login-container h1 {
+    font-size: 38px;
+  }
+  .login-container p {
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+}

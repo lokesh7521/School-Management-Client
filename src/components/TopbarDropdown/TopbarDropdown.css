@@ -1,0 +1,129 @@
+.topbar-nav-dropdown {
+  margin-left: auto;
+  position: relative;
+  z-index: 10001;
+}
+
+/* Toggle Button Styling */
+.topbar-dropdown-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.topbar-dropdown-btn:hover,
+.topbar-dropdown-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+/* Floating Dropdown Menu */
+.topbar-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 170px;
+  background: rgba(11, 23, 54, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 8px 0;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+}
+
+/* Menu Header */
+.dropdown-header {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 4px;
+}
+
+/* Menu List Items */
+.topbar-dropdown-menu li button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: block;
+  outline: none;
+}
+
+.topbar-dropdown-menu li button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffcc00;
+  padding-left: 20px; /* Subtle slide-right hover effect */
+}
+
+/* Active current-page indicator */
+.topbar-dropdown-menu li button.selected {
+  background: rgba(255, 204, 0, 0.15);
+  color: #ffcc00;
+  border-left: 3px solid #ffcc00;
+  padding-left: 13px;
+}
+
+/* Keyframes */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile responsive scaling */
+@media (max-width: 600px) {
+  .topbar-dropdown-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .topbar-dropdown-menu {
+    width: 150px;
+  }
+  
+  .topbar-dropdown-menu li button {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+  
+  .topbar-dropdown-menu li button:hover {
+    padding-left: 17px;
+  }
+  
+  .topbar-dropdown-menu li button.selected {
+    padding-left: 11px;
+  }
+}
