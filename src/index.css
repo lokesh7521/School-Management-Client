@@ -34,25 +34,37 @@ html {
   overflow-x: hidden;
 }
 
-/* Scroll Offset for Sticky Navbar targeting anchor links */
-section[id] {
-  scroll-margin-top: 145px;
-}
-
-@media (max-width: 850px) {
-  section[id] {
-    scroll-margin-top: 90px;
-  }
-}
-
 body {
   margin: 0;
+  padding-top: 135px;
   font-family: var(--font-family);
   background-color: var(--bg-light);
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* Scroll Offset for Sticky Navbar targeting anchor links */
+section[id] {
+  scroll-margin-top: 135px;
+}
+
+@media (max-width: 850px) {
+  section[id] {
+    scroll-margin-top: 85px;
+  }
+  body {
+    padding-top: 85px !important;
+  }
+}
+
+html.mobile-menu-open,
+body.mobile-menu-open {
+  overflow: hidden !important;
+  height: 100% !important;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 code {
@@ -67,9 +79,9 @@ code {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(224, 242, 254, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,9 +103,9 @@ code {
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(30, 58, 138, 0.25);
+  border: 3px solid #ffffff;
   animation: lightboxZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: default;
 }
@@ -102,18 +114,27 @@ code {
   position: absolute;
   top: -45px;
   right: 0;
-  background: none;
-  border: none;
-  color: #f8fafc;
-  font-size: 36px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e3a8a;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   line-height: 1;
-  transition: 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
 }
 
 .lightbox-close:hover {
-  color: #ffcc00;
-  transform: scale(1.15);
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  transform: scale(1.1);
 }
 
 .zoomable-img {
@@ -143,21 +164,64 @@ code {
 }
 
 /* ==========================================
-   GLOBAL SCROLL SHOW/HIDE STICKY HEADER SYSTEM
+   GLOBAL FIXED HEADER SYSTEM (ALWAYS VISIBLE & LOCKED AT TOP)
    ========================================== */
 
-/* When body has .scroll-down (user is scrolling down), slide the header out */
-body.scroll-down .school-header {
-  transform: translateY(-100%) !important;
-}
-
-/* When body has .scroll-up (user is scrolling up), slide the header back in */
-body.scroll-up .school-header {
-  transform: translateY(0) !important;
-}
-
-/* Override slide-out transition when programmatic scroll or mobile menu is active */
+.school-header,
+body.scroll-down .school-header,
+body.scroll-up .school-header,
 body.nav-scrolling .school-header,
 body.mobile-menu-open .school-header {
   transform: translateY(0) !important;
+}
+
+/* ==========================================================================
+   GLOBAL 3-COLOR GRADIENT TOP BAR FOR ALL CARDS
+   ========================================================================== */
+
+.tp-card,
+.bp-card,
+.cp-card,
+.sbc-card,
+.fee-card,
+.fees-card,
+.facility-card,
+.facilities-card,
+.classroom-card,
+.teacher-card,
+.student-card,
+.why-card,
+.about-card,
+.academics-card,
+.ap-card {
+  position: relative !important;
+  overflow: hidden !important;
+  border-top: none !important;
+}
+
+.tp-card::before,
+.bp-card::before,
+.cp-card::before,
+.sbc-card::before,
+.fee-card::before,
+.fees-card::before,
+.facility-card::before,
+.facilities-card::before,
+.classroom-card::before,
+.teacher-card::before,
+.student-card::before,
+.why-card::before,
+.about-card::before,
+.academics-card::before,
+.ap-card::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(90deg, #ea580c 0%, #9333ea 50%, #2563eb 100%) !important;
+  z-index: 10 !important;
+  border-top-left-radius: inherit !important;
+  border-top-right-radius: inherit !important;
 }

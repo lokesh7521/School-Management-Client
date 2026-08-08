@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaCalendarAlt, FaChevronLeft, FaChevronRight, FaInfoCircle } from "react-icons/fa";
-import { calendarEvents } from "../data/schoolData";
+import axios from "axios";
+import { calendarEvents as defaultCalendarEvents } from "../data/schoolData";
 import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 import "./CalendarPage.css";
 
 function CalendarPage() {
@@ -10,6 +12,27 @@ function CalendarPage() {
   const [currentMonth, setCurrentMonth] = useState(6); 
   const [selectedDayEvents, setSelectedDayEvents] = useState([]);
   const [filterType, setFilterType] = useState("all");
+  const [eventsList, setEventsList] = useState(defaultCalendarEvents);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/public/events")
+      .then((res) => {
+        if (res.data.success && Array.isArray(res.data.data) && res.data.data.length > 0) {
+          const formatted = res.data.data.map((ev) => ({
+            id: ev._id,
+            title: ev.title,
+            date: ev.date,
+            type: (ev.category || "activity").toLowerCase(),
+            description: ev.description
+          }));
+          setEventsList(formatted);
+        }
+      })
+      .catch((err) => {
+        console.log("Using default calendar events");
+      });
+  }, []);
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -68,7 +91,7 @@ function CalendarPage() {
     const monthStr = String(currentMonth + 1).padStart(2, "0");
     const dayStr = String(day).padStart(2, "0");
     const dateQuery = `${currentYear}-${monthStr}-${dayStr}`;
-    return calendarEvents.filter(event => event.date === dateQuery);
+    return eventsList.filter(event => event.date === dateQuery);
   };
 
   // Check if a day has events of a specific type (filtered)
@@ -89,7 +112,7 @@ function CalendarPage() {
 
   // Get all events of the current month (for side panel list)
   const getEventsForCurrentMonth = () => {
-    return calendarEvents.filter(event => {
+    return eventsList.filter(event => {
       const eventDate = new Date(event.date);
       return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
     });
@@ -143,7 +166,7 @@ function CalendarPage() {
 
             {/* Weekdays Labels */}
             <div className="weekdays-grid">
-              <span>Sun</span>
+              <span className="sunday-header">Sun</span>
               <span>Mon</span>
               <span>Tue</span>
               <span>Wed</span>
@@ -156,12 +179,17 @@ function CalendarPage() {
             <div className="days-grid">
               {calendarDays.map((day, idx) => {
                 const dayEvents = getFilteredEventsForDay(day);
+                const allEventsOnDay = getEventsForDay(day);
                 const hasEvents = dayEvents.length > 0;
+                const isSunday = day && new Date(currentYear, currentMonth, day).getDay() === 0;
+                const isHoliday = day && allEventsOnDay.some(e => (e.type || e.category || "").toLowerCase() === "holiday");
                 
                 // Styles for day cells
                 let cellClass = "day-cell";
                 if (!day) cellClass += " empty-cell";
-                else if (hasEvents) cellClass += " has-events-cell";
+                if (isSunday) cellClass += " sunday-cell";
+                if (isHoliday) cellClass += " holiday-cell";
+                if (hasEvents && !isHoliday && !isSunday) cellClass += " has-events-cell";
 
                 return (
                   <div 
@@ -169,8 +197,15 @@ function CalendarPage() {
                     className={cellClass}
                     onClick={() => day && handleDayClick(day)}
                   >
-                    {day && <span className="day-number">{day}</span>}
-                    {day && hasEvents && (
+                    {day && (
+                      <span className={`day-number ${isSunday ? "sunday-number" : ""} ${isHoliday ? "holiday-number" : ""}`}>
+                        {day}
+                      </span>
+                    )}
+                    {day && isHoliday && (
+                      <span className="holiday-badge-tag">Holiday</span>
+                    )}
+                    {day && hasEvents && !isHoliday && (
                       <div className="dots-container">
                         {dayEvents.map((e, index) => (
                           <span key={index} className={`dot ${e.type}`}></span>
@@ -236,6 +271,7 @@ function CalendarPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

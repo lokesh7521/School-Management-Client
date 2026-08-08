@@ -17,6 +17,13 @@ import AcademicsPage from "./pages/AcademicsPage";
 import FeesPage from "./pages/FeesPage";
 import CalendarPage from "./pages/CalendarPage";
 import TimetablePage from "./pages/TimetablePage";
+import FacilitiesPage from "./pages/FacilitiesPage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import GalleryPage from "./pages/GalleryPage";
+import WhyChoosePage from "./pages/WhyChoosePage";
+import AdmissionsPage from "./pages/AdmissionsPage";
+import AdminPage from "./pages/AdminPage";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -74,90 +81,35 @@ function App() {
   }, []);
 
   return (
-
     <BrowserRouter>
       <ScrollToTop />
 
       <Routes>
-
         <Route path="/" element={<Home />} />
-
         <Route path="/login" element={<Login />} />
-
-        <Route
-          path="/principal-login"
-          element={<PrincipalLogin />}
-        />
-
-        <Route
-          path="/teacher-login"
-          element={<TeacherLogin />}
-        />
-
-        <Route
-          path="/student-login"
-          element={<StudentLogin />}
-        />
-
-        <Route
-          path="/student-dashboard"
-          element={<StudentDashboard />}
-        />
-
-        <Route
-          path="/teacher-dashboard"
-          element={<TeacherDashboard />}
-        />
-
-        <Route
-          path="/principal-dashboard"
-          element={<PrincipalDashboard />}
-        />
-
-        <Route
-          path="/students-by-class"
-          element={<StudentsByClass />}
-        />
-
-        <Route
-          path="/teachers"
-          element={<TeachersPage />}
-        />
-
-        <Route
-          path="/classrooms"
-          element={<ClassroomsPage />}
-        />
-
-        <Route
-          path="/buses"
-          element={<BusesPage />}
-        />
-
-        <Route
-          path="/academics"
-          element={<AcademicsPage />}
-        />
-
-        <Route
-          path="/fees"
-          element={<FeesPage />}
-        />
-
-        <Route
-          path="/calendar"
-          element={<CalendarPage />}
-        />
-
-        <Route
-          path="/timetable"
-          element={<TimetablePage />}
-        />
-
+        <Route path="/principal-login" element={<PrincipalLogin />} />
+        <Route path="/teacher-login" element={<TeacherLogin />} />
+        <Route path="/student-login" element={<StudentLogin />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+        <Route path="/principal-dashboard" element={<PrincipalDashboard />} />
+        <Route path="/students-by-class" element={<StudentsByClass />} />
+        <Route path="/teachers" element={<TeachersPage />} />
+        <Route path="/classrooms" element={<ClassroomsPage />} />
+        <Route path="/buses" element={<BusesPage />} />
+        <Route path="/academics" element={<AcademicsPage />} />
+        <Route path="/fees" element={<FeesPage />} />
+        <Route path="/facilities" element={<FacilitiesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/why-choose" element={<WhyChoosePage />} />
+        <Route path="/admissions" element={<AdmissionsPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/timetable" element={<TimetablePage />} />
       </Routes>
-
     </BrowserRouter>
-
   );
 }
 

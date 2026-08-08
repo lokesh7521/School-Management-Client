@@ -1,6 +1,6 @@
 .contact {
   width: 100%;
-  padding: 80px 10%;
+  padding: 24px 10% 60px 10%;
   background-color: var(--bg-white);
   border-bottom: 1px solid #eef2f6;
 }
@@ -202,7 +202,7 @@
 
 @media (max-width: 768px) {
   .contact {
-    padding: 60px 6%;
+    padding: 28px 5%;
   }
 
   .contact h2 {

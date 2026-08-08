@@ -30,7 +30,7 @@ function Home() {
           window.__navScrolling = true;
 
           const navbar = document.querySelector(".school-header");
-          const navbarHeight = navbar ? navbar.offsetHeight : 120;
+          const navbarHeight = navbar ? navbar.offsetHeight : 135;
           const targetTop =
             target.getBoundingClientRect().top +
             window.pageYOffset -

@@ -1,0 +1,14 @@
+.why-page {
+  min-height: 100vh;
+  background-color: var(--bg-light, #f8fafc);
+}
+
+.why-page-content {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .why-page-content {
+    width: 100%;
+  }
+}

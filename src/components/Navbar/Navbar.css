@@ -4,12 +4,14 @@
 
 .school-header {
   width: 100%;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 9999;
+  left: 0;
+  right: 0;
+  z-index: 99999;
   box-shadow: var(--box-shadow-md);
   background: var(--bg-white);
-  transition: var(--transition-smooth), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--transition-smooth);
 }
 
 /* ========================================= */
@@ -40,17 +42,20 @@
 }
 
 .school-logo {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2.5px solid #ffffff;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.05));
+  background: #ffffff;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.14), 0 0 0 2px rgba(249, 115, 22, 0.35);
   transition: var(--transition-smooth);
 }
 
 .school-brand:hover .school-logo {
-  transform: scale(1.05) rotate(-3deg);
+  transform: scale(1.06);
+  border-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.2), 0 0 0 3px var(--secondary-color);
 }
 
 .school-name-container {
@@ -162,12 +167,14 @@
 }
 
 .nav-links {
+  width: 100%;
   max-width: 100%;
   margin: 0 auto;
   display: flex;
   list-style: none;
   align-items: center;
-  gap: 8px !important;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .nav-links>li {
@@ -341,26 +348,27 @@
   }
 }
 
-@media (min-width: 851px) and (max-width: 1600px) {
+@media (min-width: 1201px) and (max-width: 1600px) {
 
   .nav-links li a,
   .nav-dropdown-toggle {
-    font-size: 13px !important;
-    padding: 14px 10px !important;
+    font-size: 13.5px !important;
+    padding: 14px 12px !important;
   }
 
   .nav-links {
-    gap: 4px !important;
+    justify-content: space-between;
+    gap: 8px !important;
   }
 
   .nav-links>li::after {
-    left: 10px !important;
-    right: 10px !important;
+    left: 12px !important;
+    right: 12px !important;
   }
 
   .nav-links li.nav-login-item a {
-    padding: 6px 16px !important;
-    font-size: 12.5px !important;
+    padding: 8px 18px !important;
+    font-size: 13px !important;
   }
 }
 
@@ -368,26 +376,84 @@
 
   .nav-links li a,
   .nav-dropdown-toggle {
-    font-size: 12px !important;
-    padding: 14px 6px !important;
+    font-size: 12.5px !important;
+    padding: 14px 8px !important;
   }
 
   .nav-links {
-    gap: 2px !important;
+    justify-content: space-between;
+    gap: 4px !important;
   }
 
   .nav-links>li::after {
-    left: 6px !important;
-    right: 6px !important;
+    left: 8px !important;
+    right: 8px !important;
   }
 
   .nav-links li.nav-login-item a {
-    padding: 6px 12px !important;
-    font-size: 11.5px !important;
+    padding: 7px 14px !important;
+    font-size: 12px !important;
   }
 }
 
+/* Mobile Drawer Backdrop */
+.mobile-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99998;
+  animation: backdropFadeIn 0.3s ease;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.drawer-title {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
 @media (max-width: 850px) {
+  .top-header-inner {
+    padding: 10px 16px;
+  }
+
+  .school-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .school-name {
+    font-size: 19px;
+  }
+
+  .school-tagline {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
   .header-info-blocks {
     display: none;
     /* Hide top contact info block on tablet/mobile views */
@@ -404,12 +470,16 @@
     left: -290px;
     width: 290px;
     height: 100vh;
+    height: 100dvh;
     background: var(--primary-color);
-    padding: 80px 24px 20px;
+    padding: 24px 20px 20px;
     box-shadow: 4px 0 30px rgba(0, 0, 0, 0.4);
     transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10000;
+    z-index: 100000;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     border-bottom: none;
     border-right: 3px solid var(--secondary-color);
   }

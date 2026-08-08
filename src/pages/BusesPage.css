@@ -7,56 +7,87 @@
 .bp-page-heading {
   display: flex;
   align-items: center;
-  gap: 18px;
-  background: linear-gradient(135deg, #003366 0%, #0f2460 100%);
-  border-radius: 14px;
-  padding: 24px 28px;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--secondary-color);
+  border-radius: var(--border-radius-lg);
+  padding: 16px 24px;
   margin-bottom: 24px;
-  box-shadow: 0 4px 18px rgba(0, 51, 102, 0.18);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
   justify-content: space-between;
 }
 
+.bp-heading-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
 .bp-heading-icon {
-  font-size: 40px;
-  color: #ffcc00;
+  font-size: 22px;
+  color: var(--secondary-color);
+  background: #fff3eb;
+  padding: 10px;
+  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+}
+
+.bp-heading-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .bp-heading-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 4px 0;
+  color: var(--primary-color);
+  margin: 0;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
 }
 
 .bp-heading-sub {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 3px 0 0 0;
+  line-height: 1.3;
 }
 
 .bp-heading-back-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 10px 20px;
-  border-radius: 8px;
+  background: #f1f5f9;
+  color: var(--primary-color);
+  border: 1px solid #cbd5e1;
+  padding: 9px 20px;
+  border-radius: 30px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.25s;
+  transition: var(--transition-smooth);
   white-space: nowrap;
   flex-shrink: 0;
   margin-left: auto;
 }
 
 .bp-heading-back-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  transform: translateX(-3px);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--secondary-color);
+  color: #ffffff;
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
 }
 
 /* TOP BAR */
@@ -123,7 +154,7 @@
 .bp-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 24px 24px 60px 24px;
 }
 
 /* SUMMARY */
@@ -135,56 +166,76 @@
 }
 
 .bp-sum-card {
-  background: white;
-  border-radius: 12px;
-  padding: 22px 20px;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  border-top: 3px solid #003366;
-  transition: 0.3s;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.bp-sum-card.highlight {
-  border-top-color: #ffcc00;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .bp-sum-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.12);
+  border-color: #cbd5e1;
 }
 
-.bp-sum-icon {
-  font-size: 20px;
-  color: #003366;
-  margin-bottom: 8px;
+.bp-sum-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
-.bp-sum-icon.status-active {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: #2e7d32;
-  box-shadow: 0 0 10px rgba(46, 125, 50, 0.6);
-  margin-bottom: 10px;
+.bp-sum-card.blue .bp-sum-icon-box {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.bp-sum-card.indigo .bp-sum-icon-box {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.bp-sum-card.pink .bp-sum-icon-box {
+  background: #fdf2f8;
+  color: #db2777;
+}
+
+.bp-sum-card.orange .bp-sum-icon-box {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.bp-sum-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .bp-sum-num {
-  display: block;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
-  color: #003366;
-  margin-bottom: 4px;
+  color: #0f172a;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }
 
 .bp-sum-label {
   font-size: 12px;
-  color: #888;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #64748b;
+  margin-top: 3px;
+  white-space: nowrap;
 }
 
 /* CONTROLS */
@@ -225,30 +276,32 @@
 .bp-filters {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .bp-filter-btn {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   padding: 8px 18px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  color: #4a5568;
-  transition: 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  color: #64748b;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 .bp-filter-btn:hover {
-  background: #f7fafc;
-  border-color: #cbd5e0;
+  border-color: #ea580c;
+  color: #ea580c;
 }
 
 .bp-filter-btn.active {
-  background: #003366;
-  color: white;
-  border-color: #003366;
+  background: #0b1329;
+  color: #ffffff;
+  border-color: #0b1329;
+  box-shadow: 0 4px 12px rgba(11, 19, 41, 0.2);
 }
 
 .bp-showing {
@@ -492,14 +545,40 @@
 @media (max-width: 768px) {
   .bp-page-heading {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 18px 20px;
-    gap: 16px;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .bp-heading-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .bp-heading-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .bp-heading-title {
+    font-size: 17px;
+  }
+
+  .bp-heading-sub {
+    font-size: 12px;
   }
 
   .bp-heading-back-btn {
     width: 100%;
     justify-content: center;
+    padding: 8px 16px;
+    font-size: 13px;
     margin-left: 0;
   }
 
@@ -513,7 +592,23 @@
   }
 
   .bp-sum-card {
-    padding: 14px 10px;
+    padding: 12px 12px;
+    gap: 10px;
+  }
+
+  .bp-sum-icon-box {
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+
+  .bp-sum-num {
+    font-size: 20px;
+  }
+
+  .bp-sum-label {
+    font-size: 11px;
   }
 
   .bp-controls {

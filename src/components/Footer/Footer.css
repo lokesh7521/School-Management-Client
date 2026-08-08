@@ -166,8 +166,10 @@
   }
 
   .footer-box:nth-child(1) h2 {
-    font-size: 22px;
-    margin-bottom: 12px;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 14px;
     display: inline-block;
   }
 
@@ -266,6 +268,10 @@
   /* School name spans full width */
   .footer-box:nth-child(1) {
     grid-column: span 2;
+  }
+
+  .footer-box:nth-child(1) h2 {
+    font-size: 25px;
   }
 
   /* Tighter font for contact links so email/phone fit without cutting */

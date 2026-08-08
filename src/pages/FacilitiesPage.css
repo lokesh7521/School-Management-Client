@@ -1,0 +1,15 @@
+.fac-page {
+  min-height: 100vh;
+  background-color: var(--bg-light, #f8fafc);
+  padding-bottom: 0;
+}
+
+.fac-page-content {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .fac-page-content {
+    width: 100%;
+  }
+}

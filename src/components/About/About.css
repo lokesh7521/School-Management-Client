@@ -1,6 +1,6 @@
 .about {
   width: 100%;
-  padding: 80px 10%;
+  padding: 24px 10% 60px 10%;
   background-color: var(--bg-white);
   border-bottom: 1px solid #eef2f6;
 }
@@ -189,7 +189,7 @@
 
 @media (max-width: 768px) {
   .about {
-    padding: 50px 6%;
+    padding: 28px 5% 16px 5%;
   }
 
   .about-left h2 {
@@ -527,10 +527,13 @@
 
 @media (max-width: 900px) {
   .leadership-section {
-    margin-left: -6%;
-    margin-right: -6%;
-    padding-left: 6%;
-    padding-right: 6%;
+    margin-top: 24px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: -5%;
+    margin-right: -5%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .leadership-container {

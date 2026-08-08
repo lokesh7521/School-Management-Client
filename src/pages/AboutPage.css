@@ -1,0 +1,14 @@
+.about-page {
+  min-height: 100vh;
+  background-color: var(--bg-light, #f8fafc);
+}
+
+.about-page-content {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .about-page-content {
+    width: 100%;
+  }
+}

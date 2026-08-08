@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { FaUserGraduate, FaSearch, FaChartBar, FaArrowLeft } from "react-icons/fa";
+import { FaUserGraduate, FaSearch, FaChartBar, FaArrowLeft, FaDoorOpen, FaUsers, FaChartLine } from "react-icons/fa";
 import Navbar from "../components/Navbar/Navbar";
 import { classData, streamColors } from "../data/schoolData";
 import "./StudentsByClass.css";
@@ -17,10 +17,8 @@ function StudentsByClass() {
   const handleBack = () => {
     if (from === "whychoose") {
       navigate("/#whychoose");
-    } else if (from === "about") {
-      navigate("/#about");
     } else {
-      navigate(-1);
+      navigate("/#academics");
     }
   };
 
@@ -30,7 +28,8 @@ function StudentsByClass() {
   const streams = ["All", "Primary", "Middle", "Secondary", "Senior"];
 
   const filtered = classData.filter(c => {
-    const matchSearch = c.class.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = c.class.toLowerCase().includes(search.toLowerCase()) ||
+                        c.stream.toLowerCase().includes(search.toLowerCase());
     const matchStream = activeStream === "All" || c.stream === activeStream;
     return matchSearch && matchStream;
   });
@@ -47,10 +46,12 @@ function StudentsByClass() {
 
         {/* PAGE HEADING */}
         <div className="sbc-page-heading">
-          <FaUserGraduate className="sbc-heading-icon" />
-          <div>
-            <h1 className="sbc-heading-title">Students By Class</h1>
-            <p className="sbc-heading-sub">Swami Vivekanand Sen. Sec. School — Class-wise Enrollment Overview</p>
+          <div className="sbc-heading-main">
+            <FaUserGraduate className="sbc-heading-icon" />
+            <div className="sbc-heading-text">
+              <h1 className="sbc-heading-title">Students By Class</h1>
+              <p className="sbc-heading-sub">Swami Vivekanand Sen. Sec. School — Class-wise Enrollment Overview</p>
+            </div>
           </div>
           <button className="sbc-back-btn" onClick={handleBack}>
             <FaArrowLeft /> Back
@@ -59,21 +60,41 @@ function StudentsByClass() {
 
         {/* SUMMARY CARDS */}
         <div className="sbc-summary">
-          <div className="sbc-summary-card">
-            <span className="sbc-sum-num">{totalStudents}</span>
-            <span className="sbc-sum-label">Total Students</span>
+          <div className="sbc-summary-card blue">
+            <div className="sbc-sum-icon-box">
+              <FaUserGraduate />
+            </div>
+            <div className="sbc-sum-details">
+              <span className="sbc-sum-num">{totalStudents}</span>
+              <span className="sbc-sum-label">Total Students</span>
+            </div>
           </div>
-          <div className="sbc-summary-card">
-            <span className="sbc-sum-num">12</span>
-            <span className="sbc-sum-label">Total Classes</span>
+          <div className="sbc-summary-card indigo">
+            <div className="sbc-sum-icon-box">
+              <FaDoorOpen />
+            </div>
+            <div className="sbc-sum-details">
+              <span className="sbc-sum-num">12</span>
+              <span className="sbc-sum-label">Total Classes</span>
+            </div>
           </div>
-          <div className="sbc-summary-card">
-            <span className="sbc-sum-num">{Math.round(totalStudents / 12)}</span>
-            <span className="sbc-sum-label">Avg Per Class</span>
+          <div className="sbc-summary-card pink">
+            <div className="sbc-sum-icon-box">
+              <FaUsers />
+            </div>
+            <div className="sbc-sum-details">
+              <span className="sbc-sum-num">{Math.round(totalStudents / 12)}</span>
+              <span className="sbc-sum-label">Avg Per Class</span>
+            </div>
           </div>
-          <div className="sbc-summary-card highlight">
-            <span className="sbc-sum-num">{classData.find(c => c.students === maxStudents)?.class}</span>
-            <span className="sbc-sum-label">Largest Class</span>
+          <div className="sbc-summary-card orange">
+            <div className="sbc-sum-icon-box">
+              <FaChartLine />
+            </div>
+            <div className="sbc-sum-details">
+              <span className="sbc-sum-num">{classData.find(c => c.students === maxStudents)?.class}</span>
+              <span className="sbc-sum-label">Largest Class</span>
+            </div>
           </div>
         </div>
 

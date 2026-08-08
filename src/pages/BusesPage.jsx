@@ -1,24 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  FaBus, FaUsers, FaUser, FaPhone, FaSearch, FaMapMarkerAlt, FaCircle, FaArrowLeft
+  FaBus, FaUsers, FaUser, FaPhone, FaSearch, FaMapMarkerAlt, FaCircle, FaArrowLeft, FaCheckCircle
 } from "react-icons/fa";
+import axios from "axios";
 import Navbar from "../components/Navbar/Navbar";
-import { buses } from "../data/schoolData";
+import Footer from "../components/Footer/Footer";
+import { buses as defaultBuses } from "../data/schoolData";
 import "./BusesPage.css";
 
 function BusesPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const from = searchParams.get("from");
+  const [busList, setBusList] = useState(defaultBuses);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/public/buses")
+      .then((res) => {
+        if (res.data.success && Array.isArray(res.data.data) && res.data.data.length > 0) {
+          setBusList(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log("Using default buses list");
+      });
+  }, []);
 
   const handleBack = () => {
     if (from === "whychoose") {
       navigate("/#whychoose");
-    } else if (from === "about") {
-      navigate("/#about");
     } else {
-      navigate(-1);
+      navigate("/facilities");
     }
   };
 
@@ -28,21 +42,22 @@ function BusesPage() {
 
   const statuses = ["All", "Active", "Maintenance"];
 
-  const filtered = buses.filter(b => {
-    const matchSearch =
-      b.busNo.toLowerCase().includes(search.toLowerCase()) ||
-      b.route.toLowerCase().includes(search.toLowerCase()) ||
-      b.driver.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = activeStatus === "All" || b.status === activeStatus;
-    return matchSearch && matchStatus;
+  const [activeBus, setActiveBus] = useState(null);
+
+  const filtered = busList.filter((bus) => {
+    const term = search.toLowerCase();
+    const matchBusNo = (bus.busNumber || "").toLowerCase().includes(term);
+    const matchRoute = (bus.routeName || "").toLowerCase().includes(term);
+    const matchDriver = (bus.driverName || "").toLowerCase().includes(term);
+    const matchStops = (bus.stops || []).some((s) => (s.stopName || "").toLowerCase().includes(term));
+    const matchStatus = activeStatus === "All" || bus.status === activeStatus;
+    return (matchBusNo || matchRoute || matchDriver || matchStops) && matchStatus;
   });
 
-  const totalSeats = buses.reduce((s, b) => s + b.capacity, 0);
-  const activeCount = buses.filter(b => b.status === "Active").length;
-  
-  // Calculate total unique stops
+  const totalSeats = busList.reduce((acc, b) => acc + (b.capacity || 0), 0);
+  const activeCount = busList.filter((b) => b.status === "Active").length;
   const allStops = new Set();
-  buses.forEach(b => b.stops.forEach(s => allStops.add(s)));
+  busList.forEach((b) => (b.stops || []).forEach((s) => allStops.add(s.stopName)));
 
   return (
     <div className="bp-page">
@@ -51,77 +66,38 @@ function BusesPage() {
 
       <div className="bp-content">
 
-        {/* PAGE HEADING */}
-        <div className="bp-page-heading">
-          <FaBus className="bp-heading-icon" />
-          <div>
-            <h1 className="bp-heading-title">Transport (Buses)</h1>
-            <p className="bp-heading-sub">Swami Vivekanand Sen. Sec. School — School Bus Routes & Fleet</p>
-          </div>
-          <button className="bp-heading-back-btn" onClick={handleBack}>
-            <FaArrowLeft /> Back
-          </button>
-        </div>
-
-        {/* SUMMARY CARDS */}
-        <div className="bp-summary">
-          <div className="bp-sum-card">
-            <FaBus className="bp-sum-icon" />
-            <span className="bp-sum-num">{buses.length}</span>
-            <span className="bp-sum-label">Total Buses</span>
-          </div>
-          <div className="bp-sum-card">
-            <div className="bp-sum-icon status-active" />
-            <span className="bp-sum-num">{activeCount}</span>
-            <span className="bp-sum-label">Active Buses</span>
-          </div>
-          <div className="bp-sum-card">
-            <FaMapMarkerAlt className="bp-sum-icon" />
-            <span className="bp-sum-num">{allStops.size}</span>
-            <span className="bp-sum-label">Covered Stops</span>
-          </div>
-          <div className="bp-sum-card highlight">
-            <FaUsers className="bp-sum-icon" />
-            <span className="bp-sum-num">{totalSeats}</span>
-            <span className="bp-sum-label">Total Seat Capacity</span>
-          </div>
-        </div>
-
         {/* CONTROLS */}
         <div className="bp-controls">
           <div className="bp-search-box">
             <FaSearch className="bp-search-icon" />
             <input
               type="text"
-              placeholder="Search route, bus no, driver..."
+              placeholder="Search by bus number, route or driver..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
+              className="bp-search-input"
             />
           </div>
+
           <div className="bp-filters">
-            {statuses.map(s => (
+            {statuses.map((st) => (
               <button
-                key={s}
-                className={`bp-filter-btn ${activeStatus === s ? "active" : ""}`}
-                onClick={() => setActiveStatus(s)}
+                key={st}
+                className={`bp-filter-btn ${activeStatus === st ? "active" : ""}`}
+                onClick={() => setActiveStatus(st)}
               >
-                {s}
+                {st}
               </button>
             ))}
           </div>
         </div>
 
-        <p className="bp-showing">
-          Showing <strong>{filtered.length}</strong> vehicles
-        </p>
-
-        {/* BUS ROUTE CARDS GRID */}
+        {/* BUS GRID */}
         <div className="bp-grid">
-          {filtered.map(bus => (
+          {filtered.map((bus, idx) => (
             <div
               className="bp-card"
-              key={bus.id}
-              style={{ borderTop: `4px solid ${bus.iconColor}` }}
+              key={bus._id || bus.id || bus.busNo || bus.busNumber || idx}
             >
               {/* BUS VISUAL HEADER */}
               <div className="bp-card-visual" onClick={() => setLightboxImg(bus.image)}>
@@ -129,13 +105,13 @@ function BusesPage() {
                   src={bus.image}
                   alt={bus.busNo}
                   className="bp-card-img zoomable-img"
-                  onError={e => {
+                  onError={(e) => {
                     e.target.style.display = "none";
                   }}
                 />
                 <div className="bp-card-overlay" />
                 <div className="bp-visual-icon">
-                  <FaBus color={bus.iconColor} size={22} />
+                  <FaBus color={bus.iconColor || "#003366"} size={22} />
                 </div>
                 <span
                   className={`bp-status-badge ${bus.status.toLowerCase()}`}
@@ -161,18 +137,20 @@ function BusesPage() {
                 <p className="bp-route-title">{bus.route}</p>
 
                 {/* VISUAL TIMELINE */}
-                <div className="bp-timeline">
-                  <p className="bp-timeline-heading">Stops Sequence</p>
-                  <div className="bp-timeline-line">
-                    {bus.stops.map((stop, i) => (
-                      <div className="bp-timeline-node" key={i}>
-                        <FaCircle className="bp-node-dot" style={{ color: bus.iconColor }} />
-                        <span className="bp-node-label">{stop}</span>
-                        {i < bus.stops.length - 1 && <span className="bp-node-arrow">→</span>}
-                      </div>
-                    ))}
+                {bus.stops && bus.stops.length > 0 && (
+                  <div className="bp-timeline">
+                    <p className="bp-timeline-heading">Stops Sequence</p>
+                    <div className="bp-timeline-line">
+                      {bus.stops.map((stop, i) => (
+                        <div className="bp-timeline-node" key={i}>
+                          <FaCircle className="bp-node-dot" style={{ color: bus.iconColor || "#003366" }} />
+                          <span className="bp-node-label">{stop}</span>
+                          {i < bus.stops.length - 1 && <span className="bp-node-arrow">→</span>}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* STAFF INFO */}
                 <div className="bp-staff">
@@ -201,13 +179,13 @@ function BusesPage() {
       {/* LIGHTBOX POPUP */}
       {lightboxImg && (
         <div className="lightbox-overlay" onClick={() => setLightboxImg(null)}>
-          <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img src={lightboxImg} alt="Enlarged view" className="lightbox-img" />
             <button className="lightbox-close" onClick={() => setLightboxImg(null)}>&times;</button>
           </div>
         </div>
       )}
-
+      <Footer />
     </div>
   );
 }

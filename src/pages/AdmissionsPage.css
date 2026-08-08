@@ -1,0 +1,14 @@
+.adm-page {
+  min-height: 100vh;
+  background-color: var(--bg-light, #f8fafc);
+}
+
+.adm-page-content {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .adm-page-content {
+    width: 100%;
+  }
+}
