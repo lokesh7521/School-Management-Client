@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  FaBus, FaUsers, FaUser, FaPhone, FaSearch, FaMapMarkerAlt, FaCircle, FaArrowLeft, FaCheckCircle
+  FaBus, FaUsers, FaUser, FaPhone, FaSearch, FaCircle
 } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../components/Navbar/Navbar";
@@ -10,9 +9,6 @@ import { buses as defaultBuses } from "../data/schoolData";
 import "./BusesPage.css";
 
 function BusesPage() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const from = searchParams.get("from");
   const [busList, setBusList] = useState(defaultBuses);
 
   useEffect(() => {
@@ -28,21 +24,11 @@ function BusesPage() {
       });
   }, []);
 
-  const handleBack = () => {
-    if (from === "whychoose") {
-      navigate("/#whychoose");
-    } else {
-      navigate("/facilities");
-    }
-  };
-
   const [search, setSearch] = useState("");
   const [activeStatus, setActiveStatus] = useState("All");
   const [lightboxImg, setLightboxImg] = useState(null);
 
   const statuses = ["All", "Active", "Maintenance"];
-
-  const [activeBus, setActiveBus] = useState(null);
 
   const filtered = busList.filter((bus) => {
     const term = search.toLowerCase();
@@ -53,11 +39,6 @@ function BusesPage() {
     const matchStatus = activeStatus === "All" || bus.status === activeStatus;
     return (matchBusNo || matchRoute || matchDriver || matchStops) && matchStatus;
   });
-
-  const totalSeats = busList.reduce((acc, b) => acc + (b.capacity || 0), 0);
-  const activeCount = busList.filter((b) => b.status === "Active").length;
-  const allStops = new Set();
-  busList.forEach((b) => (b.stops || []).forEach((s) => allStops.add(s.stopName)));
 
   return (
     <div className="bp-page">

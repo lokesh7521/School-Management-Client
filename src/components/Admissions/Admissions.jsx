@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  FaGraduationCap,
   FaCheckCircle,
   FaFileAlt,
   FaPhoneAlt,
-  FaUserCheck,
   FaClipboardList,
-  FaIdCard,
   FaArrowRight
 } from "react-icons/fa";
 import "./Admissions.css";

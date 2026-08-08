@@ -7,8 +7,7 @@ import {
   FaMapMarkerAlt,
   FaEnvelope,
   FaPhoneAlt,
-  FaChevronDown,
-  FaUserShield
+  FaChevronDown
 } from "react-icons/fa";
 import logo from "../../assets/images/logo.png";
 import "./Navbar.css";

@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  FaChalkboardTeacher,
   FaPhone,
   FaBook,
-  FaArrowLeft,
-  FaUsers,
-  FaUserTie,
-  FaUserGraduate,
-  FaAward,
   FaSearch,
   FaTimes
 } from "react-icons/fa";
@@ -19,9 +12,6 @@ import { teachers as defaultTeachers, subjectColors } from "../data/schoolData";
 import "./TeachersPage.css";
 
 function TeachersPage() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const from = searchParams.get("from");
   const [teacherList, setTeacherList] = useState(defaultTeachers);
   const [searchQuery, setSearchQuery] = useState("");
   const [genderFilter, setCategoryFilter] = useState("all");
@@ -38,14 +28,6 @@ function TeachersPage() {
         console.log("Using default teacher list");
       });
   }, []);
-
-  const handleBack = () => {
-    if (from === "whychoose") {
-      navigate("/#whychoose");
-    } else {
-      navigate("/");
-    }
-  };
 
   const getAvatar = (name, gender) => {
     return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(

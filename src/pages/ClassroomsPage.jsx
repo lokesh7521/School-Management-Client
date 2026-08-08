@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   FaSchool, FaUsers, FaLightbulb,
-  FaChalkboard, FaMicroscope, FaPalette, FaSearch, FaArrowLeft
+  FaChalkboard, FaMicroscope, FaPalette, FaSearch
 } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../components/Navbar/Navbar";
@@ -12,7 +12,6 @@ import "./ClassroomsPage.css";
 
 
 function ClassroomsPage() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialType = searchParams.get("type") || "All";
   const [search, setSearch] = useState("");
@@ -21,16 +20,6 @@ function ClassroomsPage() {
   const [classList, setClassList] = useState(defaultClassrooms);
 
   const from = searchParams.get("from");
-
-  const handleBack = () => {
-    if (from === "whychoose") {
-      navigate("/#whychoose");
-    } else if (from === "about") {
-      navigate("/#about");
-    } else {
-      navigate(-1);
-    }
-  };
 
   useEffect(() => {
     axios

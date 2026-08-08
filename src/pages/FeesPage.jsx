@@ -1,15 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   FaReceipt,
-  FaMoneyCheckAlt,
   FaInfoCircle,
   FaCalendarAlt,
-  FaArrowLeft,
-  FaGraduationCap,
-  FaMoneyBillWave,
-  FaBus,
-  FaCoins,
   FaSearch,
   FaTimes
 } from "react-icons/fa";
@@ -57,9 +50,6 @@ const renderBusFee = (busFee) => {
 };
 
 function FeesPage() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const from = searchParams.get("from");
   const [feeList, setFeeList] = useState(defaultFees);
   const [schoolInfo, setSchoolInfo] = useState(null);
   const [search, setSearch] = useState("");
@@ -88,14 +78,6 @@ function FeesPage() {
         console.log("Error fetching school info", err);
       });
   }, []);
-
-  const handleBack = () => {
-    if (from === "whychoose") {
-      navigate("/#whychoose");
-    } else {
-      navigate("/#academics");
-    }
-  };
 
   const handleReset = () => {
     setSearch("");

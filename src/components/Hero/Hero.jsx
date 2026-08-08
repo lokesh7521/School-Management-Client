@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./Hero.css";
 import schoolImage from "../../assets/images/school.png";
@@ -45,9 +45,9 @@ function Hero() {
     setCurrentIndex((prev) => (prev === 0 ? currentSliderList.length - 1 : prev - 1));
   };
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev === currentSliderList.length - 1 ? 0 : prev + 1));
-  };
+  }, [currentSliderList.length]);
 
   const handleTouchStart = (e) => {
     setTouchStartX(e.targetTouches[0].clientX);
@@ -76,7 +76,7 @@ function Hero() {
   useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
-  }, [currentSliderList.length]);
+  }, [nextSlide]);
 
   // Fetch announcements
   useEffect(() => {
