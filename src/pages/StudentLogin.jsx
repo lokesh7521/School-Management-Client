@@ -3,6 +3,7 @@ import "./StudentLogin.css";
 import { useNavigate, Link } from "react-router-dom";
 
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import axios from "axios";
 
@@ -17,6 +18,9 @@ function StudentLogin() {
 
   const [password, setPassword] =
     useState("");
+
+  const [showPassword, setShowPassword] =
+    useState(false);
 
   const [loading, setLoading] =
     useState(false);
@@ -142,17 +146,48 @@ function StudentLogin() {
 
           {/* PASSWORD */}
 
-          <input
-            type="password"
+          <div className="password-input-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
 
-            placeholder="Enter Password"
+              placeholder="Enter Password"
 
-            value={password}
+              value={password}
 
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-          />
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+            />
+            <button
+              type="button"
+
+              className="password-toggle-btn"
+
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
+
+              title={
+                showPassword
+                  ? "Hide password"
+                  : "Show password"
+              }
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          <div className="login-options">
+            <button
+              type="button"
+              className="forgot-password-btn"
+              onClick={() => {
+                alert("Please contact your Class Teacher or School Administrator to reset your Student Portal password.\n\nSupport Email: admin@school.com\nSupport Phone: +91 98765 43210");
+              }}
+            >
+              Forgot Password?
+            </button>
+          </div>
 
           {/* BUTTON */}
 

@@ -104,7 +104,7 @@ function About() {
       window.__navScrolling = true;
 
       const navbar = document.querySelector(".school-header");
-      const navbarHeight = navbar ? navbar.offsetHeight : 120;
+      const navbarHeight = navbar ? navbar.offsetHeight : 115;
       const targetTop =
         target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
 
@@ -129,13 +129,15 @@ function About() {
     const leader = aboutData[leaderType];
     setSelectedLeader(leader);
     setIsLeaderModalOpen(true);
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
+    document.documentElement.classList.add("modal-open");
   };
 
   const closeLeaderModal = () => {
     setIsLeaderModalOpen(false);
     setSelectedLeader(null);
-    document.body.style.overflow = "unset";
+    document.body.classList.remove("modal-open");
+    document.documentElement.classList.remove("modal-open");
   };
 
   const totalStudents = classData.reduce((sum, c) => sum + c.students, 0);
@@ -198,7 +200,7 @@ function About() {
       <div className="leadership-section">
         <p className="section-label">SCHOOL LEADERSHIP</p>
         <h2>Messages from Management</h2>
-        
+
         <div className="leadership-container">
           {/* DIRECTOR CARD */}
           <div className="leader-card">

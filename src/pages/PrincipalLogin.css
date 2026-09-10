@@ -79,25 +79,101 @@
   gap: 20px;
 }
 
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 48px !important;
+}
+
+.principal-box form button.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  background: transparent !important;
+  border: none !important;
+  color: #475569 !important;
+  cursor: pointer;
+  padding: 4px !important;
+  font-size: 19px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: all 0.2s ease !important;
+  z-index: 2;
+  width: auto !important;
+}
+
+.principal-box form button.password-toggle-btn:hover {
+  color: #0052a3 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: scale(1.15) !important;
+}
+
+.login-options {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -8px;
+  margin-bottom: -4px;
+}
+
+.principal-box form button.forgot-password-btn {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 0 !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: color 0.2s ease !important;
+  text-decoration: none !important;
+  width: auto !important;
+}
+
+.principal-box form button.forgot-password-btn:hover {
+  color: #ffcc00 !important;
+  text-decoration: underline !important;
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .principal-box input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 12px;
   padding: 14px 16px;
   font-size: 15px;
-  color: white;
+  color: #0f172a !important;
   outline: none;
   transition: all 0.3s ease;
 }
 
 .principal-box input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: #64748b !important;
 }
 
 .principal-box input:focus {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #ffcc00;
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.15);
+  background: #ffffff !important;
+  border-color: #ffcc00 !important;
+  box-shadow: 0 0 0 3.5px rgba(255, 204, 0, 0.35) !important;
+}
+
+.principal-box input:-webkit-autofill,
+.principal-box input:-webkit-autofill:hover,
+.principal-box input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f172a !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .principal-box button {

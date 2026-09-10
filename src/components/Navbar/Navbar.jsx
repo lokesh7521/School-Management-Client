@@ -146,7 +146,7 @@ function Navbar() {
             window.__navScrolling = true;
 
             const navbar = document.querySelector(".school-header");
-            const navbarHeight = navbar ? navbar.offsetHeight : 135;
+            const navbarHeight = navbar ? navbar.offsetHeight : 115;
             const targetTop =
               target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
 
@@ -335,8 +335,8 @@ function Navbar() {
             const liClass = item.isButton
               ? "nav-login-item"
               : hasChildren
-              ? `dropdown-li ${isOpen ? "mobile-open" : ""}`
-              : "";
+                ? `dropdown-li ${isOpen ? "mobile-open" : ""}`
+                : "";
 
             if (hasChildren) {
               return (

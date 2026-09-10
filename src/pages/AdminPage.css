@@ -1,8 +1,28 @@
+.admin-page-container:not(.modal-open) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+html.modal-open, body.modal-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+}
+
 .admin-page-container {
   min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-color: #f4f7fe;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #2b3674;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* ==========================================================================
@@ -219,7 +239,7 @@
 /* Content Body */
 .admin-content-body {
   max-width: 1280px;
-  margin: 135px auto 2rem auto;
+  margin: 16px auto 2rem auto !important;
   padding: 0 1.5rem;
 }
 
@@ -1449,4 +1469,50 @@
 .contact-back-btn:hover {
   background: #e2e8f0;
   color: #0f172a;
+}
+
+/* MOBILE & TABLET RESPONSIVE STYLES FOR PC & MOBILE COMPATIBILITY */
+@media (max-width: 992px) {
+  .admin-two-tier-header {
+    position: relative !important;
+    top: auto;
+  }
+
+  .admin-content-body {
+    margin: 12px auto 1.5rem auto !important;
+    padding: 0 1rem !important;
+  }
+
+  .admin-top-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-header-contacts {
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .admin-main-navbar {
+    padding: 0 0.5rem;
+  }
+
+  .admin-nav-tabs-list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 0;
+  }
+
+  .admin-card {
+    padding: 1rem !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-table-container,
+  .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
 }

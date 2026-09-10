@@ -8,10 +8,13 @@ function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: ""
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [schoolInfo, setSchoolInfo] = useState({
     schoolName: "Swami Vivekanand",
@@ -42,12 +45,12 @@ function Contact() {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, message } = formData;
+    const { name, email, phone, message } = formData;
 
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
       setError("⚠️ Please fill all fields before submitting.");
       return;
     }
@@ -58,9 +61,30 @@ function Contact() {
       return;
     }
 
-    setSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
-    setTimeout(() => setSubmitted(false), 4000);
+    if (phone.length < 10) {
+      setError("⚠️ Please enter a valid 10-digit contact number.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await axios.post(`${API_BASE}/public/contact`, formData);
+      if (res.data && res.data.success) {
+        setSubmitted(true);
+        setSuccessMsg(res.data.message || "✅ Message sent successfully! We will get back to you soon.");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(res.data?.message || "Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting contact form:", err);
+      setError(err.response?.data?.message || "Server error while sending message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -124,7 +148,7 @@ function Contact() {
         <div>
           {submitted && (
             <div className="contact-success">
-              ✅ Message sent successfully! We will get back to you soon.
+              {successMsg || "✅ Message sent successfully! We will get back to you soon."}
             </div>
           )}
 
@@ -137,6 +161,7 @@ function Contact() {
               placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
+              disabled={loading}
             />
 
             <input
@@ -145,6 +170,16 @@ function Contact() {
               placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
+              disabled={loading}
+            />
+
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Your Contact / Mobile Number"
+              value={formData.phone}
+              onChange={handleChange}
+              disabled={loading}
             />
 
             <textarea
@@ -152,14 +187,18 @@ function Contact() {
               placeholder="Your Message"
               value={formData.message}
               onChange={handleChange}
+              disabled={loading}
             ></textarea>
 
-            <button type="submit">Send Message</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Sending Message..." : "Send Message"}
+            </button>
           </form>
         </div>
       </div>
     </section>
   );
+
 }
 
 export default Contact;

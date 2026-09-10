@@ -146,13 +146,15 @@ function WhyChoose() {
   const openModal = (strength) => {
     setSelectedStrength(strength);
     setIsModalOpen(true);
-    document.body.style.overflow = "hidden"; // Prevent background scroll
+    document.body.classList.add("modal-open");
+    document.documentElement.classList.add("modal-open");
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedStrength(null);
-    document.body.style.overflow = "unset"; // Restore background scroll
+    document.body.classList.remove("modal-open");
+    document.documentElement.classList.remove("modal-open");
   };
 
   const getIcon = (type) => {

@@ -36,7 +36,7 @@ html {
 
 body {
   margin: 0;
-  padding-top: 135px;
+  padding-top: 110px !important;
   font-family: var(--font-family);
   background-color: var(--bg-light);
   color: var(--text-dark);
@@ -45,26 +45,111 @@ body {
   overflow-x: hidden;
 }
 
+/* ==========================================================================
+   LOGIN & DASHBOARD SYSTEM OVERRIDES: REMOVE TOP PADDING & SIDEBAR
+   ========================================================================== */
+body:has(.login-page),
+body:has(.admin-login-page),
+body:has(.principal-login),
+body:has(.teacher-login),
+body:has(.student-login),
+body:has(.principal-dashboard),
+body:has(.teacher-dashboard),
+body:has(.student-dashboard),
+body:has(.admin-page),
+body:has(.dashboard) {
+  padding-top: 0 !important;
+}
+
+.login-page,
+.admin-login-page,
+.principal-login,
+.teacher-login,
+.student-login,
+.principal-dashboard,
+.teacher-dashboard,
+.student-dashboard,
+.admin-page,
+.dashboard {
+  margin-top: -110px !important;
+  min-height: 100vh !important;
+}
+
+body:has(.login-page) .login-page,
+body:has(.admin-login-page) .admin-login-page,
+body:has(.principal-login) .principal-login,
+body:has(.teacher-login) .teacher-login,
+body:has(.student-login) .student-login,
+body:has(.principal-dashboard) .principal-dashboard,
+body:has(.teacher-dashboard) .teacher-dashboard,
+body:has(.student-dashboard) .student-dashboard,
+body:has(.admin-page) .admin-page,
+body:has(.dashboard) .dashboard {
+  margin-top: 0 !important;
+}
+
 /* Scroll Offset for Sticky Navbar targeting anchor links */
 section[id] {
-  scroll-margin-top: 135px;
+  scroll-margin-top: 110px !important;
 }
 
 @media (max-width: 850px) {
   section[id] {
-    scroll-margin-top: 85px;
+    scroll-margin-top: 75px !important;
   }
+
   body {
-    padding-top: 85px !important;
+    padding-top: 75px !important;
+  }
+
+  body:has(.login-page),
+  body:has(.admin-login-page),
+  body:has(.principal-login),
+  body:has(.teacher-login),
+  body:has(.student-login),
+  body:has(.principal-dashboard),
+  body:has(.teacher-dashboard),
+  body:has(.student-dashboard),
+  body:has(.admin-page),
+  body:has(.dashboard) {
+    padding-top: 0 !important;
+  }
+
+  .login-page,
+  .admin-login-page,
+  .principal-login,
+  .teacher-login,
+  .student-login,
+  .principal-dashboard,
+  .teacher-dashboard,
+  .student-dashboard,
+  .admin-page,
+  .dashboard {
+    margin-top: -75px !important;
+  }
+
+  body:has(.login-page) .login-page,
+  body:has(.admin-login-page) .admin-login-page,
+  body:has(.principal-login) .principal-login,
+  body:has(.teacher-login) .teacher-login,
+  body:has(.student-login) .student-login,
+  body:has(.principal-dashboard) .principal-dashboard,
+  body:has(.teacher-dashboard) .teacher-dashboard,
+  body:has(.student-dashboard) .student-dashboard,
+  body:has(.admin-page) .admin-page,
+  body:has(.dashboard) .dashboard {
+    margin-top: 0 !important;
   }
 }
 
 html.mobile-menu-open,
-body.mobile-menu-open {
+body.mobile-menu-open,
+html.modal-open,
+body.modal-open {
   overflow: hidden !important;
-  height: 100% !important;
-  touch-action: none;
-  overscroll-behavior: none;
+  height: 100vh !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
 }
 
 code {

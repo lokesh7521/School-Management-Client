@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaSignOutAlt } from "react-icons/fa";
 import axios from "axios";
 import logo from "../assets/images/logo.png";
+import AdminLogin from "./AdminLogin";
+import {
+  teachers as defaultTeachers,
+  classrooms as defaultClassrooms,
+  buses as defaultBuses,
+  feesData as defaultFeesData,
+  calendarEvents as defaultEvents
+} from "../data/schoolData";
 import "./AdminPage.css";
 
 const API_BASE = "http://localhost:5000/api";
@@ -29,6 +37,16 @@ const renderBusFee = (busFee) => {
 };
 
 function AdminPage() {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("adminToken"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminUser");
+    setIsAuthenticated(false);
+    navigate("/admin-login");
+  };
+
   const [activeTab, setActiveTab] = useState("sliders");
   const [contactSubTab, setContactSubTab] = useState(null); // null = Main 3-Options Hub
   const [toast, setToast] = useState({ message: "", type: "" });
@@ -81,14 +99,14 @@ function AdminPage() {
   const [schoolInfo, setSchoolInfo] = useState(defaultSchoolInfo);
 
   const [announcements, setAnnouncements] = useState([]);
-  const [teachers, setTeachers] = useState([]);
-  const [buses, setBuses] = useState([]);
-  const [fees, setFees] = useState([]);
-  const [events, setEvents] = useState([]);
+  const [teachers, setTeachers] = useState(defaultTeachers);
+  const [buses, setBuses] = useState(defaultBuses);
+  const [fees, setFees] = useState(defaultFeesData);
+  const [events, setEvents] = useState(defaultEvents);
   const [navItems, setNavItems] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [facilities, setFacilities] = useState([]);
-  const [classrooms, setClassrooms] = useState([]);
+  const [classrooms, setClassrooms] = useState(defaultClassrooms);
   const [timetableItems, setTimetableItems] = useState([]);
   const [academics, setAcademics] = useState([]);
   const [sliders, setSliders] = useState([]);
@@ -305,31 +323,31 @@ function AdminPage() {
         });
       }
       if (annRes.status === "fulfilled") {
-        setAnnouncements(annRes.value.data.data || []);
+        setAnnouncements(annRes.value.data?.data || []);
       }
       if (teacherRes.status === "fulfilled") {
-        setTeachers(teacherRes.value.data.data || []);
+        setTeachers(teacherRes.value.data?.data?.length > 0 ? teacherRes.value.data.data : defaultTeachers);
       }
       if (busRes.status === "fulfilled") {
-        setBuses(busRes.value.data.data || []);
+        setBuses(busRes.value.data?.data?.length > 0 ? busRes.value.data.data : defaultBuses);
       }
       if (feeRes.status === "fulfilled") {
-        setFees(feeRes.value.data.data || []);
+        setFees(feeRes.value.data?.data?.length > 0 ? feeRes.value.data.data : defaultFeesData);
       }
       if (eventRes.status === "fulfilled") {
-        setEvents(eventRes.value.data.data || []);
+        setEvents(eventRes.value.data?.data?.length > 0 ? eventRes.value.data.data : defaultEvents);
       }
       if (navRes.status === "fulfilled") {
-        setNavItems(navRes.value.data.data || []);
+        setNavItems(navRes.value.data?.data || []);
       }
       if (galleryRes.status === "fulfilled") {
-        setGallery(galleryRes.value.data.data || []);
+        setGallery(galleryRes.value.data?.data || []);
       }
       if (facilitiesRes.status === "fulfilled") {
-        setFacilities(facilitiesRes.value.data.data || []);
+        setFacilities(facilitiesRes.value.data?.data || []);
       }
       if (classroomsRes.status === "fulfilled") {
-        setClassrooms(classroomsRes.value.data.data || []);
+        setClassrooms(classroomsRes.value.data?.data?.length > 0 ? classroomsRes.value.data.data : defaultClassrooms);
       }
       if (timetableRes.status === "fulfilled") {
         setTimetableItems(timetableRes.value.data.data || []);
@@ -349,6 +367,16 @@ function AdminPage() {
     fetchAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (modalOpen || cropModalOpen || headerQuickEdit?.open || viewPhotoFullscreen) {
+      document.body.classList.add("modal-open");
+      document.documentElement.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+      document.documentElement.classList.remove("modal-open");
+    }
+  }, [modalOpen, cropModalOpen, headerQuickEdit, viewPhotoFullscreen]);
 
   // Save School Info & Header Branding
   const handleSaveSchoolInfo = async (e) => {
@@ -924,6 +952,10 @@ function AdminPage() {
     }
   };
 
+  if (!isAuthenticated) {
+    return <AdminLogin onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="admin-page-container">
       {/* TWO-TIER ADMIN HEADER MATCHING FRONTEND WEBSITE 1:1 */}
@@ -1017,6 +1049,30 @@ function AdminPage() {
                   <span className="admin-contact-value">{schoolInfo.phone || "+91 9829739603"}</span>
                 </div>
               </div>
+
+              <button
+                className="admin-logout-btn"
+                onClick={handleLogout}
+                title="Logout of Admin Panel"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "8px 16px",
+                  background: "#dc2626",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "0.85rem",
+                  fontWeight: "600",
+                  marginLeft: "12px",
+                  boxShadow: "0 2px 8px rgba(220, 38, 38, 0.3)",
+                  alignSelf: "center"
+                }}
+              >
+                <FaSignOutAlt /> Logout
+              </button>
             </div>
           </div>
         </div>

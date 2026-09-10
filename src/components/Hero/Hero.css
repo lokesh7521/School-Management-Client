@@ -1,7 +1,9 @@
 .hero {
   width: 100%;
-  height: calc(100vh - 135px);
-  min-height: 550px;
+  height: calc(100vh - 110px);
+  height: calc(100dvh - 110px);
+  min-height: 460px;
+  max-height: calc(100vh - 110px);
   position: relative;
   display: flex;
   align-items: center;
@@ -191,18 +193,20 @@
 
 @media (max-width: 992px) {
   .hero {
-    height: calc(100vh - 90px);
-    min-height: 500px;
+    height: calc(100vh - 110px);
+    height: calc(100dvh - 110px);
+    min-height: 420px;
+    max-height: calc(100vh - 110px);
   }
   .hero-content {
-    padding: 36px 24px;
+    padding: 32px 24px;
     max-width: 600px;
   }
   .hero-content h1 {
-    font-size: 36px;
+    font-size: 34px;
   }
   .hero-content p {
-    font-size: 17px;
+    font-size: 16px;
   }
 }
 
@@ -210,11 +214,21 @@
 /* MOBILE RESPONSIVE */
 /* ========================= */
 
+@media (max-width: 850px) {
+  .hero {
+    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
+    min-height: 380px;
+    max-height: calc(100vh - 75px);
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
-    height: 60vh;
-    min-height: 430px;
-    max-height: 560px;
+    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
+    min-height: 360px;
+    max-height: calc(100vh - 75px);
   }
   .hero-slide {
     background-size: cover;
@@ -279,8 +293,10 @@
 
 @media (max-width: 480px) {
   .hero {
-    height: 62vh;
-    min-height: 410px;
+    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
+    min-height: 350px;
+    max-height: calc(100vh - 75px);
   }
   .hero-content {
     padding: 20px 16px;

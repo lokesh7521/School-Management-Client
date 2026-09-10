@@ -101,7 +101,7 @@ function Hero() {
       window.__navScrolling = true;
 
       const navbar = document.querySelector(".school-header");
-      const navbarHeight = navbar ? navbar.offsetHeight : 120;
+      const navbarHeight = navbar ? navbar.offsetHeight : 115;
       const targetTop =
         target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
 

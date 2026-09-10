@@ -17,10 +17,13 @@ function Admissions() {
     parentName: "",
     className: "",
     mobile: "",
+    email: "",
     address: ""
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [schoolInfo, setSchoolInfo] = useState(null);
 
@@ -43,13 +46,13 @@ function Admissions() {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { studentName, parentName, className, mobile, address } = formData;
 
     if (!studentName || !parentName || !className || !mobile || !address) {
-      setError("⚠️ Please fill all fields before submitting.");
+      setError("⚠️ Please fill all required fields before submitting.");
       return;
     }
 
@@ -58,11 +61,27 @@ function Admissions() {
       return;
     }
 
-    setSubmitted(true);
-    setFormData({ studentName: "", parentName: "", className: "", mobile: "", address: "" });
+    setLoading(true);
+    setError("");
 
-    setTimeout(() => setSubmitted(false), 4000);
+    try {
+      const res = await axios.post(`${API_BASE}/public/admission`, formData);
+      if (res.data && res.data.success) {
+        setSubmitted(true);
+        setSuccessMsg(res.data.message || "✅ Inquiry submitted successfully! Our counselor will call you shortly.");
+        setFormData({ studentName: "", parentName: "", className: "", mobile: "", email: "", address: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError(res.data?.message || "Failed to submit inquiry. Please try again.");
+      }
+    } catch (err) {
+      console.error("Error submitting admission inquiry:", err);
+      setError(err.response?.data?.message || "Server error while submitting form. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   const defaultSteps = [
     {
@@ -214,7 +233,7 @@ function Admissions() {
 
           {submitted && (
             <div className="admission-success">
-              ✅ Inquiry submitted successfully! Our counselor will call you shortly.
+              {successMsg || "✅ Inquiry submitted successfully! Our counselor will call you shortly."}
             </div>
           )}
 
@@ -233,6 +252,7 @@ function Admissions() {
                 placeholder="Enter full student name"
                 value={formData.studentName}
                 onChange={handleChange}
+                disabled={loading}
               />
             </div>
 
@@ -244,6 +264,7 @@ function Admissions() {
                 placeholder="Enter parent/guardian name"
                 value={formData.parentName}
                 onChange={handleChange}
+                disabled={loading}
               />
             </div>
 
@@ -255,18 +276,30 @@ function Admissions() {
                   value={formData.className}
                   onChange={handleChange}
                   className="adm-select"
+                  disabled={loading}
                 >
                   <option value="">Select Class</option>
-                  <option value="Nursery / KG">Nursery / KG</option>
-                  <option value="Class 1 to 5 (Primary)">Class 1 to 5 (Primary)</option>
-                  <option value="Class 6 to 8 (Middle)">Class 6 to 8 (Middle)</option>
-                  <option value="Class 9 & 10 (Secondary)">Class 9 & 10 (Secondary)</option>
-                  <option value="Class 11 Science">Class 11 Science</option>
-                  <option value="Class 11 Arts">Class 11 Arts</option>
-                  <option value="Class 11 Commerce">Class 11 Commerce</option>
-                  <option value="Class 12 Science">Class 12 Science</option>
-                  <option value="Class 12 Arts">Class 12 Arts</option>
-                  <option value="Class 12 Commerce">Class 12 Commerce</option>
+                  <option value="Nursery / LKG / UKG">Nursery / LKG / UKG</option>
+                  <option value="Class 1st">Class 1st</option>
+                  <option value="Class 2nd">Class 2nd</option>
+                  <option value="Class 3rd">Class 3rd</option>
+                  <option value="Class 4th">Class 4th</option>
+                  <option value="Class 5th">Class 5th</option>
+                  <option value="Class 6th">Class 6th</option>
+                  <option value="Class 7th">Class 7th</option>
+                  <option value="Class 8th">Class 8th</option>
+                  <option value="Class 9th">Class 9th</option>
+                  <option value="Class 10th">Class 10th</option>
+                  <option value="Class 11th Arts">Class 11th Arts</option>
+                  <option value="Class 11th Commerce">Class 11th Commerce</option>
+                  <option value="Class 11th Agriculture">Class 11th Agriculture</option>
+                  <option value="Class 11th Math">Class 11th Math</option>
+                  <option value="Class 11th Bio">Class 11th Bio</option>
+                  <option value="Class 12th Arts">Class 12th Arts</option>
+                  <option value="Class 12th Commerce">Class 12th Commerce</option>
+                  <option value="Class 12th Agriculture">Class 12th Agriculture</option>
+                  <option value="Class 12th Math">Class 12th Math</option>
+                  <option value="Class 12th Bio">Class 12th Bio</option>
                 </select>
               </div>
 
@@ -278,8 +311,21 @@ function Admissions() {
                   placeholder="10-digit mobile no."
                   value={formData.mobile}
                   onChange={handleChange}
+                  disabled={loading}
                 />
               </div>
+            </div>
+
+            <div className="adm-field">
+              <label>Email Address (Optional)</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter email to receive confirmation"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={loading}
+              />
             </div>
 
             <div className="adm-field">
@@ -289,13 +335,15 @@ function Admissions() {
                 placeholder="Enter village/city and district address"
                 value={formData.address}
                 onChange={handleChange}
+                disabled={loading}
               ></textarea>
             </div>
 
-            <button type="submit" className="adm-submit-btn">
-              Submit Admission Form <FaArrowRight />
+            <button type="submit" className="adm-submit-btn" disabled={loading}>
+              {loading ? "Submitting Form..." : <>Submit Admission Form <FaArrowRight /></>}
             </button>
           </form>
+
         </div>
       </div>
     </section>
