@@ -120,6 +120,7 @@ function AdminPage() {
 
   // Circular Cropper Modal States
   const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [cropTarget, setCropTarget] = useState("logo"); // 'logo' | 'director' | 'principal'
   const [rawImageSrc, setRawImageSrc] = useState(null);
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -399,6 +400,24 @@ function AdminPage() {
       const reader = new FileReader();
       reader.onload = (event) => {
         setRawImageSrc(event.target.result);
+        setCropTarget("logo");
+        setZoom(1);
+        setRotation(0);
+        setPanPos({ x: 0, y: 0 });
+        setCropModalOpen(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle Teacher Photo File Upload (Open Interactive Circular DP Crop Modal)
+  const handleTeacherFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setRawImageSrc(event.target.result);
+        setCropTarget("teacher");
         setZoom(1);
         setRotation(0);
         setPanPos({ x: 0, y: 0 });
@@ -553,7 +572,7 @@ function AdminPage() {
     setIsDragging(false);
   };
 
-  // Crop & Apply Circular Logo
+  // Crop & Apply Circular Photo
   const handleApplyCrop = async () => {
     if (!rawImageSrc) return;
     const offscreen = document.createElement("canvas");
@@ -565,10 +584,12 @@ function AdminPage() {
     const img = new Image();
     img.onload = async () => {
       ctx.save();
-      ctx.beginPath();
-      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.clip();
+      if (cropTarget === "logo" || cropTarget === "teacher") {
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+      }
 
       const scaleFactor = size / 280;
       ctx.translate(size / 2 + panPos.x * scaleFactor, size / 2 + panPos.y * scaleFactor);
@@ -583,15 +604,36 @@ function AdminPage() {
       ctx.restore();
 
       const croppedDataUrl = offscreen.toDataURL("image/png", 0.95);
-      const updatedInfo = { ...schoolInfo, logoUrl: croppedDataUrl };
-      setSchoolInfo(updatedInfo);
-      setHeaderQuickEdit((prev) => ({ ...prev, value: croppedDataUrl }));
+      let updatedInfo = { ...schoolInfo };
+      if (cropTarget === "director") {
+        updatedInfo.director = { ...(updatedInfo.director || {}), image: croppedDataUrl };
+        setSchoolInfo(updatedInfo);
+      } else if (cropTarget === "principal") {
+        updatedInfo.principal = { ...(updatedInfo.principal || {}), image: croppedDataUrl };
+        setSchoolInfo(updatedInfo);
+      } else if (cropTarget === "teacher" || cropTarget === "bus") {
+        setCurrentItem((prev) => ({ ...prev, image: croppedDataUrl }));
+      } else if (cropTarget === "classroom" || cropTarget === "facility") {
+        setCurrentItem((prev) => ({
+          ...prev,
+          uploadedImages: [...(prev.uploadedImages || []), croppedDataUrl],
+          images: Array.from(new Set([...(prev.images || []), croppedDataUrl]))
+        }));
+      } else {
+        updatedInfo.logoUrl = croppedDataUrl;
+        setHeaderQuickEdit((prev) => ({ ...prev, value: croppedDataUrl }));
+        setSchoolInfo(updatedInfo);
+      }
 
-      try {
-        await axios.put(`${API_BASE}/admin/info`, updatedInfo);
-        showToast("Circular Logo cropped & updated live!");
-      } catch (err) {
-        showToast("Cropped logo set in preview!");
+      if (cropTarget === "director" || cropTarget === "principal" || cropTarget === "logo") {
+        try {
+          await axios.put(`${API_BASE}/admin/info`, updatedInfo);
+          showToast("Photo cropped & updated live!");
+        } catch (err) {
+          showToast("Cropped photo set in preview!");
+        }
+      } else {
+        showToast("Teacher photo cropped & set in preview!");
       }
       setCropModalOpen(false);
     };
@@ -654,50 +696,42 @@ function AdminPage() {
     }
   };
 
-  // Handle Bus Image Upload
+  // Handle Bus Image Upload (Open Interactive Rectangular Crop Modal)
   const handleBusFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setCurrentItem((prev) => ({
-          ...prev,
-          image: event.target.result
-        }));
+        setRawImageSrc(event.target.result);
+        setCropTarget("bus");
+        setZoom(1);
+        setRotation(0);
+        setPanPos({ x: 0, y: 0 });
+        setCropModalOpen(true);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Handle Classroom Image Upload
+  // Handle Classroom Image Upload (Open Interactive Rectangular Crop Modal)
   const handleClassroomFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      const file = files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
-        setCurrentItem((prev) => ({
-          ...prev,
-          image: event.target.result
-        }));
+        setRawImageSrc(event.target.result);
+        setCropTarget("classroom");
+        setZoom(1);
+        setRotation(0);
+        setPanPos({ x: 0, y: 0 });
+        setCropModalOpen(true);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Handle Teacher Image Upload
-  const handleTeacherFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setCurrentItem((prev) => ({
-          ...prev,
-          image: event.target.result
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+
 
   // Modal Open Handlers
   const handleOpenAdd = () => {
@@ -1425,7 +1459,7 @@ function AdminPage() {
                     />
                   </div>
                   <div className="admin-form-group">
-                    <label>Upload Photo</label>
+                    <label>Upload Photo (Crop & Preview)</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -1435,10 +1469,12 @@ function AdminPage() {
                         if (file) {
                           const reader = new FileReader();
                           reader.onload = (event) => {
-                            setSchoolInfo({
-                              ...schoolInfo,
-                              director: { ...(schoolInfo.director || {}), image: event.target.result }
-                            });
+                            setRawImageSrc(event.target.result);
+                            setCropTarget("director");
+                            setZoom(1);
+                            setRotation(0);
+                            setPanPos({ x: 0, y: 0 });
+                            setCropModalOpen(true);
                           };
                           reader.readAsDataURL(file);
                         }
@@ -1569,7 +1605,7 @@ function AdminPage() {
                     />
                   </div>
                   <div className="admin-form-group">
-                    <label>Upload Photo</label>
+                    <label>Upload Photo (Crop & Preview)</label>
                     <input
                       type="file"
                       accept="image/*"
@@ -1579,10 +1615,12 @@ function AdminPage() {
                         if (file) {
                           const reader = new FileReader();
                           reader.onload = (event) => {
-                            setSchoolInfo({
-                              ...schoolInfo,
-                              principal: { ...(schoolInfo.principal || {}), image: event.target.result }
-                            });
+                            setRawImageSrc(event.target.result);
+                            setCropTarget("principal");
+                            setZoom(1);
+                            setRotation(0);
+                            setPanPos({ x: 0, y: 0 });
+                            setCropModalOpen(true);
                           };
                           reader.readAsDataURL(file);
                         }
@@ -1608,7 +1646,7 @@ function AdminPage() {
                     <input
                       type="email"
                       className="admin-form-control"
-                      value={schoolInfo.principal?.phone || ""}
+                      value={schoolInfo.principal?.email || ""}
                       onChange={(e) => setSchoolInfo({ ...schoolInfo, principal: { ...(schoolInfo.principal || {}), email: e.target.value } })}
                     />
                   </div>
@@ -4738,8 +4776,8 @@ function AdminPage() {
       {cropModalOpen && (
         <div className="cropper-modal-overlay" onClick={() => setCropModalOpen(false)}>
           <div className="cropper-modal-box" onClick={(e) => e.stopPropagation()}>
-            <h3 className="cropper-header-title">✂️ Crop School Logo (Instagram DP Style)</h3>
-            <p className="cropper-subtitle">Drag & zoom to adjust your logo inside the circle</p>
+            <h3 className="cropper-header-title">✂️ Crop Photo ({cropTarget === "director" ? "Director" : cropTarget === "principal" ? "Principal" : cropTarget === "teacher" ? "Teacher DP" : cropTarget === "bus" ? "Bus Photo" : cropTarget === "classroom" ? "Classroom Photo" : "School Logo"})</h3>
+            <p className="cropper-subtitle">Drag & zoom to adjust how your photo will be cropped and previewed</p>
 
             <div
               className="cropper-viewport-wrapper"
@@ -4757,7 +4795,7 @@ function AdminPage() {
                 height={280}
                 className="cropper-canvas"
               />
-              <div className="cropper-circle-overlay" />
+              <div className={(cropTarget === "logo" || cropTarget === "teacher") ? "cropper-circle-overlay" : "cropper-rect-overlay"} />
             </div>
 
             <div className="cropper-controls-bar">
@@ -4802,7 +4840,7 @@ function AdminPage() {
                 Cancel
               </button>
               <button type="button" className="cropper-btn-apply" onClick={handleApplyCrop}>
-                ✂️ Crop & Set Logo
+                ✂️ Crop & Apply Photo
               </button>
             </div>
           </div>
