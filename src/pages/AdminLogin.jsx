@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  FaUserShield,
-  FaEnvelope,
-  FaLock,
   FaEye,
   FaEyeSlash,
-  FaArrowLeft,
   FaCheckCircle,
   FaExclamationTriangle,
   FaSpinner
